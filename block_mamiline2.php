@@ -24,73 +24,56 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_mamiline2 extends block_base {
+class block_mamiline2 extends block_base
+{
 
-    function init() {
+    function init()
+    {
         $this->title = get_string('pluginname', 'block_mamiline2');
     }
 
-    function get_content() {
-        global $CFG, $OUTPUT;
-
-        if ($this->content !== null) {
-            return $this->content;
-        }
-
-        if (empty($this->instance)) {
-            $this->content = '';
-            return $this->content;
-        }
+    function get_content()
+    {
+        global $CFG;
 
         $this->content = new stdClass();
-        $this->content->items = array();
-        $this->content->icons = array();
+        $this->content->items = [];
+        $this->content->icons = [];
         $this->content->footer = '';
 
-        // user/index.php expect course context, so get one if page has module context.
-        $currentcontext = $this->page->context->get_course_context(false);
+        $html = html_writer::link(
+            new moodle_url($CFG->wwwroot . '/blocks/mamiline2/index.php'),
+            get_string('launch', 'block_mamiline2'),
+            ['class' => 'btn', 'target' => '_blank']
+        );
 
-        if (! empty($this->config->text)) {
-            $this->content->text = $this->config->text;
-        }
-
-        $this->content = '';
-        if (empty($currentcontext)) {
-            return $this->content;
-        }
-        if ($this->page->course->id == SITEID) {
-            $this->content->text .= "site context";
-        }
-
-        if (! empty($this->config->text)) {
-            $this->content->text .= $this->config->text;
-        }
-
-        return $this->content;
+        return $this->content = (object)['text' => $html];
     }
 
     // my moodle can only have SITEID and it's redundant here, so take it away
-    public function applicable_formats() {
-        return array('all' => false,
-                     'site' => true,
-                     'site-index' => true,
-                     'course-view' => true, 
-                     'course-view-social' => false,
-                     'mod' => true, 
-                     'mod-quiz' => false);
+    public function applicable_formats()
+    {
+        return ['all' => false,
+            'site' => true,
+            'site-index' => true,
+            'course-view' => true,
+            'course-view-social' => false,
+            'mod' => true,
+            'mod-quiz' => false];
     }
 
-    public function instance_allow_multiple() {
-          return true;
+    public function instance_allow_multiple()
+    {
+        return true;
     }
 
-    function has_config() {return true;}
+    function has_config()
+    {
+        return true;
+    }
 
-    public function cron() {
-            mtrace( "Hey, my cron script is running" );
-             
-                 // do something
-                  
-                      return true;
+    public function cron()
+    {
+        return true;
     }
 }

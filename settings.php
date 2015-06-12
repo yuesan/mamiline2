@@ -23,12 +23,3 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-$settings->add(new admin_setting_heading('sampleheader',
-                                         get_string('headerconfig', 'block_mamiline2'),
-                                         get_string('descconfig', 'block_mamiline2')));
-
-$settings->add(new admin_setting_configcheckbox('mamiline/foo',
-                                                get_string('labelfoo', 'block_mamiline2'),
-                                                get_string('descfoo', 'block_mamiline2'),
-                                                '0'));
