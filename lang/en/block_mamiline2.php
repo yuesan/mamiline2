@@ -16,9 +16,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'block_mamiline2', language 'en'
+ * Strings for component 'block_minerva', language 'en'
  *
- * @package   block_mamiline2
+ * @package   block_minerva
  * @copyright Takayuki FUWA <yue@eldoom.me>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

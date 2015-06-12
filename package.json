@@ -1,11 +1,11 @@
 {
-  "name": "mamiline2",
+  "name": "moodle-block_minerva",
   "version": "2.0.0",
   "description": "Analyse student's data",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yuesan/moodle-block_mamiline2.git"
+    "url": "https://github.com/yuesan/moodle-block_minerva.git"
   },
   "keywords": [
     "Moodle"

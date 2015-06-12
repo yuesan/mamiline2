@@ -1,6 +1,6 @@
 {
-  "name": "mamiline2",
-  "version": "2.0.0",
+  "name": "moodle-block_minerva",
+  "version": "1.0.0",
   "ignore": [
     ".*",
     "**/.*",

@@ -15,21 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * mamiline2 block caps.
+ * minerva block caps.
  *
- * @package    block_mamiline2
+ * @package    block_minerva
  * @copyright  Takayuki FUWA <yue@eldoom.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_mamiline2 extends block_base
+class block_minerva extends block_base
 {
 
     function init()
     {
-        $this->title = get_string('pluginname', 'block_mamiline2');
+        $this->title = get_string('pluginname', 'block_minerva');
     }
 
     function get_content()
@@ -42,8 +42,8 @@ class block_mamiline2 extends block_base
         $this->content->footer = '';
 
         $html = html_writer::link(
-            new moodle_url($CFG->wwwroot . '/blocks/mamiline2/index.php'),
-            get_string('launch', 'block_mamiline2'),
+            new moodle_url($CFG->wwwroot . '/blocks/minerva/index.php'),
+            get_string('launch', 'block_minerva'),
             ['class' => 'btn', 'target' => '_blank']
         );
 

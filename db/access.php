@@ -17,7 +17,7 @@
 /**
  * MamiLine block caps.
  *
- * @package   block_mamiline2
+ * @package   block_minerva
  * @copyright Takayuki FUWA <yue@eldoom.me>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
-    'block/mamiline2:myaddinstance' => array(
+    'block/minerva:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -34,7 +34,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
 
-    'block/mamiline2:addinstance' => array(
+    'block/minerva:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,

@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * mamiline block caps.
+ * minerva block caps.
  *
- * @package    block_mamiline2
+ * @package    block_minerva
  * @copyright  Takayuki FUWA <yue@eldoom.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
