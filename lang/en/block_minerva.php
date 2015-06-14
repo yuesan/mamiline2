@@ -28,8 +28,8 @@ $string['descconfig'] = 'Description of the config section';
 $string['descfoo'] = 'Config description';
 $string['headerconfig'] = 'Config section header';
 $string['labelfoo'] = 'Config label';
-$string['mamiline:addinstance'] = 'マミラインを追加';
-$string['mamiline:myaddinstance'] = 'マミラインをMoodleに追加';
-$string['pluginname'] = 'マミライン2';
+$string['mamiline:addinstance'] = 'ミネルバを追加';
+$string['mamiline:myaddinstance'] = 'ミネルバをMoodleに追加';
+$string['pluginname'] = 'ミネルバ';
 
-$string['launch'] = 'マミライン2を起動する';
+$string['launch'] = 'ミネルバを起動する';

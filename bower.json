@@ -9,12 +9,11 @@
   ],
   "dependencies": {
     "jquery": "~2.0.*",
-    "honoka": "*",
-    "c3": "*",
-    "adminlte" : "*"
+    "bootstrap": "3.2.*",
+    "c3": "*"
   },
   "exportsOverride": {
-    "honoka": {
+    "bootstrap": {
       "js": "**/bootstrap.min.js",
       "css": "**/bootstrap.min.css",
       "fonts" : "**/dist/fonts/*"
@@ -28,10 +27,6 @@
     "c3": {
       "js": "**/c3.min.js",
       "css": "**/c3.css"
-    },
-    "adminlte": {
-      "js": "js/app.min.js",
-      "css": "css/AdminLTE.css"
     }
   }
 }

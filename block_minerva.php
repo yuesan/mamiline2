@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_minerva extends block_base
 {
-
     function init()
     {
         $this->title = get_string('pluginname', 'block_minerva');
@@ -46,7 +45,6 @@ class block_minerva extends block_base
             get_string('launch', 'block_minerva'),
             ['class' => 'btn', 'target' => '_blank']
         );
-
         return $this->content = (object)['text' => $html];
     }
 

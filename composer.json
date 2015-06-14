@@ -1,5 +1,5 @@
 {
-  "name": "yuesan/moodle-block_mamiline",
+  "name": "yuesan/moodle-block_minerva",
   "description": "Analyse data",
   "license": "GPLv3",
   "authors": [
@@ -13,6 +13,6 @@
     "composer/installers": "~1.0"
   },
   "extra": {
-    "installer-name": "mamiline2"
+    "installer-name": "minerva"
   }
 }
