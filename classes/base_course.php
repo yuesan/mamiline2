@@ -1,11 +1,9 @@
 <?php
 namespace block_minerva;
 
-use core\event\course_completed;
-
 require_once __DIR__ . '/../../../config.php';
 
-class course
+class base_course
 {
     private $cache;
     private $context;
@@ -36,6 +34,13 @@ class course
         }
     }
 
+    /**
+     * コースを取得する。
+     *
+     * @param $courseid
+     *
+     * @return \stdClass
+     */
     private function course($courseid)
     {
         return get_course($courseid);

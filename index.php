@@ -3,6 +3,7 @@
 namespace block_minerva;
 
 require_once __DIR__ . '/../../config.php';
+require_once "apinfo.php";
 
 require_login();
 
@@ -11,10 +12,11 @@ require_login();
 /* @var $PAGE object */
 /* @var $OUTPUT object */
 global $USER, $CFG, $PAGE, $OUTPUT;
+global $APS;
 
 $context = \context_course::instance(1);
 
-$courseObj = new course($context);
+$courseObj = new base_course($context);
 
 $PAGE->set_context($context);
 echo \html_writer::start_tag('html');
@@ -57,18 +59,13 @@ echo \html_writer::start_tag("li", ["class" => "active"]);
 echo \html_writer::link("#",
     \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "ダッシュボード");
 echo \html_writer::end_tag("li");
-echo \html_writer::start_tag("li", ["class" => ""]);
-echo \html_writer::link("#",
-    \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "タイムライン");
-echo \html_writer::end_tag("li");
-echo \html_writer::start_tag("li", ["class" => ""]);
-echo \html_writer::link("#",
-    \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "小テスト");
-echo \html_writer::end_tag("li");
-echo \html_writer::start_tag("li", ["class" => ""]);
-echo \html_writer::link("#",
-    \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "提出課題");
-echo \html_writer::end_tag("li");
+
+foreach($APS as $ap){
+    echo \html_writer::start_tag("li", ["class" => ""]);
+    echo \html_writer::link(new \moodle_url("ap/" . $ap["name"] . "/"),
+        \html_writer::tag("i", "", ["class" => $ap["icon"]]) . $ap["naturalname"]);
+    echo \html_writer::end_tag("li");
+}
 echo \html_writer::end_tag("ul");
 echo \html_writer::end_div();
 echo \html_writer::end_div();
@@ -96,6 +93,11 @@ foreach($courses as $course){
     echo \html_writer::end_tag("tr");
 }
 echo \html_writer::end_tag("ul");
+echo \html_writer::end_div();
+
+echo \html_writer::start_div("col-md-10");
+$logObj = new base_logging($context);
+var_dump($logObj->login($course));
 echo \html_writer::end_div();
 
 
