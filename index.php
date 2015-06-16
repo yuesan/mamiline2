@@ -49,9 +49,18 @@ echo \html_writer::start_div("col-md-3");
 echo \html_writer::start_div("profile-sidebar");
 echo \html_writer::div($OUTPUT->user_picture($USER, ['size'=>140, 'class' => 'img-responsive', "link" => false, "alttext" => false]),
     "profile-userpic");
+
+echo \html_writer::start_div('popover bottom show', ['style' => 'position:relative; max-width:100%;']);
+echo \html_writer::start_div('arrow');
+echo \html_writer::end_div();
+
+echo \html_writer::start_div('popover-content');
+echo \html_writer::tag('p', "");
+echo \html_writer::end_div();
+echo \html_writer::end_div();
+
 echo \html_writer::start_div("profile-usertitle");
 echo \html_writer::div(fullname($USER), "profile-usertitle-name");
-echo \html_writer::div("学生", "profile-usertitle-job");
 echo \html_writer::end_div();
 echo \html_writer::start_div("profile-usermenu");
 echo \html_writer::start_tag("ul", ["class" => "nav"]);
@@ -71,35 +80,43 @@ echo \html_writer::end_div();
 echo \html_writer::end_div();
 echo \html_writer::end_div();
 
-echo \html_writer::start_div("col-md-9");
-echo \html_writer::start_div("profile-content");
+echo \html_writer::start_div("col-md-9 profile-content");
 
-echo \html_writer::start_div("col-md-10");
+echo \html_writer::start_div("col-md-12");
+echo \html_writer::tag("h3", "アクセスグラフ");
+echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
+echo \html_writer::end_div();
+
+echo \html_writer::start_div("col-md-12");
 echo \html_writer::tag("h3", "所属しているコース");
+echo \html_writer::div("現時点であなたが所属しているコース一覧です。(10件まで表示しています)", "alert alert-info");
 $courses = $courseObj->courses();
 echo \html_writer::start_tag("table", ["class" => "table table-bordered"]);
 echo \html_writer::start_tag("tr", ["class" => ""]);
 echo \html_writer::tag("th", "コース名");
 echo \html_writer::tag("th", "ロール");
 echo \html_writer::end_tag("tr");
-foreach($courses as $course){
-    echo \html_writer::start_tag("tr", ["class" => ""]);
-    echo \html_writer::tag("td",
-        \html_writer::link(
-            $courseObj->course_url($course->id),
-            $course->fullname,
-            ["target" => "_blank"]));
-    echo \html_writer::tag("td", "");
-    echo \html_writer::end_tag("tr");
+if(!empty($courses)){
+    foreach($courses as $course){
+        echo \html_writer::start_tag("tr", ["class" => ""]);
+        echo \html_writer::tag("td",
+            \html_writer::link(
+                $courseObj->course_url($course->id),
+                $course->fullname,
+                ["target" => "_blank"]));
+        echo \html_writer::tag("td", "");
+        echo \html_writer::end_tag("tr");
+    }
+}else{
+    echo \html_writer::tag("p", "どのコースにも所属していません。");
 }
-echo \html_writer::end_tag("ul");
+echo \html_writer::end_tag("table");
 echo \html_writer::end_div();
 
-echo \html_writer::start_div("col-md-10");
-$logObj = new base_logging($context);
-var_dump($logObj->login($course));
+echo \html_writer::start_div("col-md-12");
+echo \html_writer::tag("h3", "アクセスグラフ");
+echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
 echo \html_writer::end_div();
-
 
 echo \html_writer::end_div();
 echo \html_writer::end_div();
