@@ -1,0 +1,7 @@
+var chart = c3.generate({
+    bindto: '#graph_pie_@@ID@@_@@NUM@@',
+    data: {
+        columns: [@@DATA@@],
+        type : 'pie'
+    }
+});

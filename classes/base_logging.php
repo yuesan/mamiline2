@@ -16,7 +16,7 @@ class base_logging {
         $this->cache = new \stdClass();
     }
 
-    public function login($course){
+    public function access($course){
         global $USER;
         return \report_log_can_access_user_report($USER, $course);
     }
