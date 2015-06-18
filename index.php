@@ -26,7 +26,7 @@ echo \html_writer::empty_tag('meta', ['http-equiv' => 'content-language']);
 echo \html_writer::empty_tag('meta', ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
 echo \html_writer::tag('title', get_string('pluginname', 'block_minerva'), ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
 echo \html_writer::empty_tag('link', ['href' => new \moodle_url('css/bootstrap.min.css'), 'rel' => 'stylesheet']);
-echo \html_writer::empty_tag('link', ['href' => new \moodle_url('css/main.css'), 'rel' => 'stylesheet']);
+echo \html_writer::empty_tag('link',git co ['href' => new \moodle_url('css/main.css'), 'rel' => 'stylesheet']);
 
 echo \html_writer::start_tag('body');
 
@@ -51,7 +51,6 @@ echo \html_writer::div($OUTPUT->user_picture($USER, ['size'=>140, 'class' => 'im
     "profile-userpic");
 echo \html_writer::start_div("profile-usertitle");
 echo \html_writer::div(fullname($USER), "profile-usertitle-name");
-echo \html_writer::div("学生", "profile-usertitle-job");
 echo \html_writer::end_div();
 echo \html_writer::start_div("profile-usermenu");
 echo \html_writer::start_tag("ul", ["class" => "nav"]);
