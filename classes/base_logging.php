@@ -8,16 +8,17 @@ class base_logging {
 
     function __construct($context)
     {
-        global $USER, $CFG;
+        global $CFG;
         require_once __DIR__ . '/../../../report/log/lib.php';
 
         $this->context = $context;
-        $this->user = $USER;
         $this->cache = new \stdClass();
     }
 
-    public function access($course){
-        global $USER;
-        return \report_log_can_access_user_report($USER, $course);
+    public function access($course)
+    {
+        global $DB, $USER;
+        $sql = $DB->get_records("mdl_logstore_standard_log",
+            ["action" => "loggedin", "userid" => $USER->id]);
     }
 }

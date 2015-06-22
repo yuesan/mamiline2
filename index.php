@@ -21,12 +21,19 @@ $courseObj = new base_course($context);
 $PAGE->set_context($context);
 echo \html_writer::start_tag('html');
 echo \html_writer::start_tag('head');
-echo \html_writer::empty_tag('meta', ['charset' => 'UTF-8']);
-echo \html_writer::empty_tag('meta', ['http-equiv' => 'content-language']);
-echo \html_writer::empty_tag('meta', ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
-echo \html_writer::tag('title', get_string('pluginname', 'block_minerva'), ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
-echo \html_writer::empty_tag('link', ['href' => new \moodle_url('css/bootstrap.min.css'), 'rel' => 'stylesheet']);
-echo \html_writer::empty_tag('link', ['href' => new \moodle_url('css/main.css'), 'rel' => 'stylesheet']);
+echo \html_writer::empty_tag('meta',
+    ['charset' => 'UTF-8']);
+echo \html_writer::empty_tag('meta',
+    ['http-equiv' => 'content-language']);
+echo \html_writer::empty_tag('meta',
+    ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
+echo \html_writer::tag('title',
+    get_string('pluginname', 'block_minerva'),
+    ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
+echo \html_writer::empty_tag('link',
+    ['href' => new \moodle_url('css/bootstrap.min.css'), 'rel' => 'stylesheet']);
+echo \html_writer::empty_tag('link',
+    ['href' => new \moodle_url('css/main.css'), 'rel' => 'stylesheet']);
 
 echo \html_writer::start_tag('body');
 
@@ -83,8 +90,24 @@ echo \html_writer::end_div();
 echo \html_writer::start_div("col-md-9 profile-content");
 
 echo \html_writer::start_div("col-md-12");
-echo \html_writer::tag("h3", "アクセスグラフ");
-echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
+echo \html_writer::tag("h3", "アクセスステータス");
+echo \html_writer::div("あなたは今週、連続3日間ログインしました！", "alert alert-success");
+echo \html_writer::start_tag("table", ["class" => "table table-borderd"]);
+echo \html_writer::start_tag("tr");
+echo \html_writer::tag("th", "月曜日");
+echo \html_writer::tag("th", "火曜日");
+echo \html_writer::tag("th", "水曜日");
+echo \html_writer::tag("th", "木曜日");
+echo \html_writer::tag("th", "金曜日");
+echo \html_writer::end_tag("tr");
+echo \html_writer::start_tag("tr");
+echo \html_writer::tag("td", "○");
+echo \html_writer::tag("td", "○");
+echo \html_writer::tag("td", "○");
+echo \html_writer::tag("td", "○");
+echo \html_writer::tag("td", "○");
+echo \html_writer::end_tag("tr");
+echo \html_writer::end_tag("table");
 echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-12");
