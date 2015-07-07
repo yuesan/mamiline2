@@ -1,5 +1,5 @@
 var chart = c3.generate({
-    bindto: '#graph_pie_@@ID@@_@@NUM@@',
+    bindto: '#@@ID@@',
     data: {
         columns: [@@DATA@@],
         type : 'pie'

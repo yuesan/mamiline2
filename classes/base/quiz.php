@@ -1,7 +1,9 @@
 <?php
-namespace block_minerva;
+namespace block_minerva\base;
 
-class base_quiz
+defined('MOODLE_INTERNAL') || die();
+
+class quiz
 {
     private $cache;
     private $context;

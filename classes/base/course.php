@@ -1,9 +1,11 @@
 <?php
-namespace block_minerva;
+namespace block_minerva\base;
+
+defined('MOODLE_INTERNAL') || die();
 
 require_once __DIR__ . '/../../../../config.php';
 
-class base_course
+class course
 {
     private $cache;
     private $context;

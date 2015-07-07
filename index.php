@@ -2,6 +2,10 @@
 
 namespace block_minerva;
 
+use block_minerva\base\course;
+use block_minerva\base\graph;
+use block_minerva\base\logging;
+
 require_once __DIR__ . '/../../config.php';
 require_once "apinfo.php";
 
@@ -16,7 +20,11 @@ global $APS;
 
 $context = \context_course::instance(1);
 
-$courseObj = new base_course($context);
+$courseObj  = new course($context);
+$loggingObj = new logging($context);
+$graphObj = new graph($context);
+
+$jses = [];
 
 $PAGE->set_context($context);
 echo \html_writer::start_tag('html');
@@ -32,6 +40,8 @@ echo \html_writer::tag('title',
     ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
 echo \html_writer::empty_tag('link',
     ['href' => new \moodle_url('css/bootstrap.min.css'), 'rel' => 'stylesheet']);
+echo \html_writer::empty_tag('link',
+    ['href' => new \moodle_url('css/c3.css'), 'rel' => 'stylesheet']);
 echo \html_writer::empty_tag('link',
     ['href' => new \moodle_url('css/main.css'), 'rel' => 'stylesheet']);
 
@@ -89,25 +99,51 @@ echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-9 profile-content");
 
-echo \html_writer::start_div("col-md-12");
+echo \html_writer::start_div("col-md-6");
 echo \html_writer::tag("h3", "アクセスステータス");
 echo \html_writer::div("あなたは今週、連続3日間ログインしました！", "alert alert-success");
+
+$dates = $loggingObj->access();
+
+$date_base = [0 => false, 1 => false, 2 => false, 3 => false, 4 => false, 5 => false, 6 => false];
+foreach($dates as $d){
+    $date_base[$d] = true;
+}
+
 echo \html_writer::start_tag("table", ["class" => "table table-borderd"]);
 echo \html_writer::start_tag("tr");
-echo \html_writer::tag("th", "月曜日");
-echo \html_writer::tag("th", "火曜日");
-echo \html_writer::tag("th", "水曜日");
-echo \html_writer::tag("th", "木曜日");
-echo \html_writer::tag("th", "金曜日");
+echo \html_writer::tag("th", "月");
+echo \html_writer::tag("th", "火");
+echo \html_writer::tag("th", "水");
+echo \html_writer::tag("th", "木");
+echo \html_writer::tag("th", "金");
+echo \html_writer::tag("th", "土");
+echo \html_writer::tag("th", "日");
 echo \html_writer::end_tag("tr");
 echo \html_writer::start_tag("tr");
-echo \html_writer::tag("td", "○");
-echo \html_writer::tag("td", "○");
-echo \html_writer::tag("td", "○");
-echo \html_writer::tag("td", "○");
-echo \html_writer::tag("td", "○");
+
+foreach($date_base as $d){
+    if($d){
+        echo \html_writer::tag("td", "○");
+    }else{
+        echo \html_writer::tag("td", "×");
+    }
+}
 echo \html_writer::end_tag("tr");
 echo \html_writer::end_tag("table");
+echo \html_writer::end_div();
+
+echo \html_writer::start_div("col-md-6");
+echo \html_writer::tag("h3", "アクセスグラフ");
+echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
+echo \html_writer::div("", "", ["id" => "access_graph"]);
+
+$data_base = [0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0];
+foreach($dates as $d){
+    $data_base[$d]++;
+}
+
+$jses[] = $graphObj->line($data_base, "access_graph");
 echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-12");
@@ -136,11 +172,6 @@ if(!empty($courses)){
 echo \html_writer::end_tag("table");
 echo \html_writer::end_div();
 
-echo \html_writer::start_div("col-md-12");
-echo \html_writer::tag("h3", "アクセスグラフ");
-echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
-echo \html_writer::end_div();
-
 echo \html_writer::end_div();
 echo \html_writer::end_div();
 
@@ -152,5 +183,9 @@ echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/bootstrap.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/d3.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/c3.min.js'));
+foreach($jses as $js){
+    echo \html_writer::script($js);
+}
+
 echo \html_writer::end_tag('body');
 echo \html_writer::end_tag('html');
