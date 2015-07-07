@@ -1,7 +1,7 @@
 <?php
 namespace block_minerva;
 
-require_once __DIR__ . '/../../../config.php';
+require_once __DIR__ . '/../../../../config.php';
 
 class base_course
 {
@@ -12,7 +12,7 @@ class base_course
     function __construct($context)
     {
         global $USER, $CFG;
-        require_once __DIR__ . '/../../../course/lib.php';
+        require_once __DIR__ . '/../../../../course/lib.php';
 
         $this->context = $context;
         $this->user = $USER;
