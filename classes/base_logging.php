@@ -1,10 +1,11 @@
 <?php
 namespace block_minerva;
 
+define("TIME_WEEK", 604800);
+
 class base_logging {
     private $cache;
     private $context;
-    private $user;
 
     function __construct($context)
     {
@@ -15,10 +16,13 @@ class base_logging {
         $this->cache = new \stdClass();
     }
 
-    public function access($course)
+    public function access()
     {
         global $DB, $USER;
-        $sql = $DB->get_records("mdl_logstore_standard_log",
-            ["action" => "loggedin", "userid" => $USER->id]);
+        $sql = $DB->get_records("logstore_standard_log",
+            ["action" => "loggedin", "userid" => $USER->id]
+        );
+
+
     }
 }
