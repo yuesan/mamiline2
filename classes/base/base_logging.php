@@ -9,7 +9,7 @@ class base_logging {
     function __construct($context)
     {
         global $CFG;
-        require_once __DIR__ . '/../../../report/log/lib.php';
+        require_once __DIR__ . '/../../../../report/log/lib.php';
 
         $this->context = $context;
         $this->cache = new \stdClass();
@@ -18,7 +18,9 @@ class base_logging {
     public function access($course)
     {
         global $DB, $USER;
-        $sql = $DB->get_records("mdl_logstore_standard_log",
+        $sql = $DB->get_records("logstore_standard_log",
             ["action" => "loggedin", "userid" => $USER->id]);
+
+
     }
 }
