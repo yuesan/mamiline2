@@ -1,6 +1,11 @@
 var chart = c3.generate({
     bindto: '#@@ID@@',
     data: {
-        columns: [@@DATA@@]
+        x : 'x',
+        columns: [
+            ['x', @@X@@],
+            [@@DATA@@]
+        ],
+        type : 'line'
     }
 });

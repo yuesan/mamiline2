@@ -28,18 +28,18 @@ class graph
         return $js;
     }
 
-    public function line($data, $id)
+    public function line($label, $data, $id)
     {
-        $data_array = "['data1',";
+        $data_array = "'ログインした曜日',";
         foreach ($data as $key => $value) {
             $value = $value ? $value : 0;
-            $data_array .= "[$key, $value],";
+            $data_array .= "$value,";
         }
         $data_array = rtrim($data_array, ",");
-        $data_array .= "]";
 
         $js = file_get_contents(__DIR__ . '/../../templates/line.js.template');
         $js = str_replace("@@ID@@", $id, $js);
+        $js = str_replace("@@X@@", implode(",", $label), $js);
         $js = str_replace("@@DATA@@", $data_array, $js);
 
         return $js;
