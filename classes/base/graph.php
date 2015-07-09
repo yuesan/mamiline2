@@ -30,10 +30,10 @@ class graph
 
     public function line($label, $data, $id)
     {
-        $data_array = "'ログインした曜日',";
+        $data_array = "'ログイン回数',";
         foreach ($data as $key => $value) {
             $value = $value ? $value : 0;
-            $data_array .= "$value,";
+            $data_array .= "'$value',";
         }
         $data_array = rtrim($data_array, ",");
 

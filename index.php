@@ -132,8 +132,8 @@ echo \html_writer::tag("h3", "アクセスグラフ");
 echo \html_writer::div("直近7日間のアクセス回数の推移を表示しています。", "alert alert-info");
 echo \html_writer::div("", "", ["id" => "access_graph"]);
 //TODO
-//$label = ["'月'", "'火'", "'水'", "'木'", "'金'", "'土'", "'日'"];
-$label = [0,1,2,3,4,5,6];
+$label = ["'月'", "'火'", "'水'", "'木'", "'金'", "'土'", "'日'"];
+//$label = [0,1,2,3,4,5,6];
 $jses[] = $graphObj->line($label, $access_statuses, "access_graph");
 echo \html_writer::end_div();
 
