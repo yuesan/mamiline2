@@ -5,6 +5,7 @@ namespace block_minerva;
 use block_minerva\base\course;
 use block_minerva\base\graph;
 use block_minerva\base\logging;
+use block_minerva\timeline\html_writer;
 
 require_once __DIR__ . '/../../../../config.php';
 require_once "../../apinfo.php";
@@ -99,6 +100,16 @@ echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-9 profile-content");
 echo \html_writer::tag("h3", "タイムライン");
+
+echo \html_writer::start_div("timeline");
+//line component
+echo html_writer::line();
+//Separator
+echo \html_writer::start_div("separator text-mute");
+echo \html_writer::tag("time", "26. 3. 2015");
+echo \html_writer::end_div();
+
+echo \html_writer::end_div();
 
 echo \html_writer::end_div();
 
