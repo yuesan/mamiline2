@@ -98,7 +98,7 @@ echo \html_writer::end_div();
 echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-9 profile-content");
-echo \html_writer::tag("h3", "アクセスステータス");
+echo \html_writer::tag("h3", "タイムライン");
 
 echo \html_writer::end_div();
 
