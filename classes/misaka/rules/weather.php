@@ -1,14 +1,10 @@
 <?php
 
-namespace block_misaka\rules;
+namespace block_minerva\misaka\rules;
 
 use block_misaka\message;
 
 class weather extends message{
-    function __construct()
-    {
-    }
-
     public function get()
     {
         global $DB, $USER, $OUTPUT, $PAGE, $CFG;

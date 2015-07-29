@@ -1,18 +1,14 @@
 <?php
 
-namespace block_misaka\rules;
+namespace block_minerva\misaka\rules;
 
 use block_misaka\message;
+use block_misaka\misakamessages;
 use block_misaka\quiz;
 
 define('COMPONENT', 'mod_quiz');
 
-class quizmod extends message{
-    function __construct()
-    {
-
-    }
-
+class quizmod extends misakamessages{
     public function get()
     {
         global $USER, $CFG;

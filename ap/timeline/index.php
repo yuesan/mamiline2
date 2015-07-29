@@ -109,6 +109,8 @@ echo \html_writer::start_div("separator text-mute");
 echo \html_writer::tag("time", "26. 3. 2015");
 echo \html_writer::end_div();
 
+
+
 echo \html_writer::end_div();
 
 echo \html_writer::end_div();

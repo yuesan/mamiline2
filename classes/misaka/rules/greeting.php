@@ -1,6 +1,6 @@
 <?php
 
-namespace block_misaka\rules;
+namespace block_minerva\misaka\rules;
 
 use block_misaka\message;
 

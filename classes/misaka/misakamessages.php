@@ -8,7 +8,7 @@ use block_misaka\rules\weather;
 
 defined('MOODLE_INTERNAL') || die();
 
-class message
+class misakamessages
 {
     public $message_text;
 

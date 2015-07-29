@@ -1,6 +1,6 @@
 <?php
 
-namespace block_misaka;
+namespace block_minerva\misaka;
 
 class quiz
 {
