@@ -22,7 +22,7 @@ global $APS;
 
 $context = \context_course::instance(1);
 
-$courseObj  = new course($context);
+$courseObj = new course($context);
 $loggingObj = new logging($context);
 $graphObj = new graph($context);
 
@@ -66,7 +66,7 @@ echo \html_writer::start_div("container");
 echo \html_writer::start_div("row profile");
 echo \html_writer::start_div("col-md-3");
 echo \html_writer::start_div("profile-sidebar");
-echo \html_writer::div($OUTPUT->user_picture($USER, ['size'=>140, 'class' => 'img-responsive', "link" => false, "alttext" => false]),
+echo \html_writer::div($OUTPUT->user_picture($USER, ['size' => 140, 'class' => 'img-responsive', "link" => false, "alttext" => false]),
     "profile-userpic");
 
 echo \html_writer::start_div('popover bottom show', ['style' => 'position:relative; max-width:100%;']);
@@ -88,7 +88,7 @@ echo \html_writer::link("#",
     \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "ダッシュボード");
 echo \html_writer::end_tag("li");
 
-foreach($APS as $ap){
+foreach ($APS as $ap) {
     echo \html_writer::start_tag("li", ["class" => ""]);
     echo \html_writer::link(new \moodle_url("ap/" . $ap["name"] . "/"),
         \html_writer::tag("i", "", ["class" => $ap["icon"]]) . $ap["naturalname"]);
@@ -112,11 +112,13 @@ echo \html_writer::end_div();
 
 $timelineObj = new timeline($context);
 $dataes = $timelineObj->myself();
-foreach($dataes as $data){
-    switch($data->target){
-        case "user_login" :
-            echo html_writer::panel_simple("", "ログイン", "ログインしました");
-//            echo html_writer::panel_box("ログインしました", "ログインしました！", "aaa");
+foreach ($dataes as $data) {
+    switch ($data->eventname) {
+        case '\core\event\user_loggedin' :
+            if ($data->action == "loggedin") {
+                $date = userdate($data->timecreated);
+                echo html_writer::panel_simple("", "ログイン", $date . "にMoodleへログインしました");
+            }
             break;
     }
 }
@@ -135,7 +137,7 @@ echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/bootstrap.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/d3.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/c3.min.js'));
-foreach($jses as $js){
+foreach ($jses as $js) {
     echo \html_writer::script($js);
 }
 
