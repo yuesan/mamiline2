@@ -26,8 +26,12 @@ class log
         global $DB, $USER;
         $from_num = $page * MAX_LOGS;
         $max_num = $from_num + MAX_LOGS;
-        return $DB->get_records("logstore_standard_log",
-            ["userid" => $USER->id, "", $from_num, $max_num]);
+        return $DB->get_records(
+            "logstore_standard_log",
+            ["userid" => $USER->id],
+            "",
+            "*",
+            $from_num, $max_num);
     }
 
     public function in_course($courseid)

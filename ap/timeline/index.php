@@ -6,6 +6,7 @@ use block_minerva\base\course;
 use block_minerva\base\graph;
 use block_minerva\base\logging;
 use block_minerva\timeline\html_writer;
+use block_minerva\timeline\timeline;
 
 require_once __DIR__ . '/../../../../config.php';
 require_once "../../apinfo.php";
@@ -109,7 +110,16 @@ echo \html_writer::start_div("separator text-mute");
 echo \html_writer::tag("time", "26. 3. 2015");
 echo \html_writer::end_div();
 
-
+$timelineObj = new timeline($context);
+$dataes = $timelineObj->myself();
+foreach($dataes as $data){
+    switch($data->target){
+        case "user_login" :
+            echo html_writer::panel_simple("", "ログイン", "ログインしました");
+//            echo html_writer::panel_box("ログインしました", "ログインしました！", "aaa");
+            break;
+    }
+}
 
 echo \html_writer::end_div();
 

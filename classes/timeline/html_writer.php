@@ -44,14 +44,14 @@ class html_writer extends \html_writer
         return $html;
     }
 
-    public static function panel_box($header, $content, $footer)
+    public static function panel_box($title, $content, $footer)
     {
         $html  = self::start_tag("article");
         $html .= self::start_div("panel-heading icon");
         $html .= self::tag("i", "", ["class" => "glyphicon glyphicon-plus"]);
         $html .= self::end_div();
         $html .= self::start_div("panel-heading icon");
-        $html .= self::tag("h2", $header, ["class" => "panel-title"]);
+        $html .= self::tag("h2", $title, ["class" => "panel-title"]);
         $html .= self::end_div();
         $html .= self::div($content, "panel-body");
         $html .= self::start_div("panel-footer icon");
