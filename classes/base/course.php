@@ -43,7 +43,7 @@ class course
      *
      * @return \stdClass
      */
-    private function course($courseid)
+    public function course($courseid)
     {
         return get_course($courseid);
     }

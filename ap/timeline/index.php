@@ -5,6 +5,7 @@ namespace block_minerva;
 use block_minerva\base\course;
 use block_minerva\base\graph;
 use block_minerva\base\logging;
+use block_minerva\base\quiz;
 use block_minerva\timeline\html_writer;
 use block_minerva\timeline\timeline;
 
@@ -25,6 +26,8 @@ $context = \context_course::instance(1);
 $courseObj = new course($context);
 $loggingObj = new logging($context);
 $graphObj = new graph($context);
+
+$userid = $USER->id;
 
 $jses = [];
 
@@ -113,11 +116,23 @@ echo \html_writer::end_div();
 $timelineObj = new timeline($context);
 $dataes = $timelineObj->myself();
 foreach ($dataes as $data) {
-    switch ($data->eventname) {
-        case '\core\event\user_loggedin' :
+    $date = userdate($data->timecreated);
+    switch ($data->component) {
+        case 'core' :
             if ($data->action == "loggedin") {
-                $date = userdate($data->timecreated);
-                echo html_writer::panel_simple("", "ログイン", $date . "にMoodleへログインしました");
+                echo html_writer::panel_success("", "ログイン", $date . "にMoodleへログインしました");
+            }
+            break;
+        case 'mod_quiz' :
+            if ($data->target == "attempt") {
+                $context = \context_module::instance($data->contextinstanceid);
+                $quizObj = new quiz($context);
+                $attempt = $quizObj->attempt($data->objectid);
+                $quiz = $quizObj->quiz($attempt->quiz);
+                $grade = $quizObj->grade($quiz, $userid);
+                echo html_writer::panel_success("",
+                    "小テストを受験",
+                    $date . "に小テスト「" . $quiz->name . "」を受験しました。点数は" . $grade->rawgrade . "でした。");
             }
             break;
     }

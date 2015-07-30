@@ -1,7 +1,7 @@
 <?php
 namespace block_minerva\timeline\dao;
 
-define("MAX_LOGS", 30);
+define("MAX_LOGS", 10000);
 
 class log
 {
@@ -29,7 +29,7 @@ class log
         return $DB->get_records(
             "logstore_standard_log",
             ["userid" => $USER->id],
-            "",
+            "timecreated DESC",
             "*",
             $from_num, $max_num);
     }

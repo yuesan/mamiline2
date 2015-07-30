@@ -62,6 +62,25 @@ class html_writer extends \html_writer
         return $html;
     }
 
+    public static function panel_success($title, $content, $footer)
+    {
+        $html  = self::start_tag("article", ["class" => "panel panel-success"]);
+        $html .= self::start_div("panel-heading icon");
+        $html .= self::tag("i", "", ["class" => "glyphicon glyphicon-plus"]);
+        $html .= self::end_div();
+        $html .= self::start_div("panel-heading icon");
+        $html .= self::tag("h2", $title, ["class" => "panel-title"]);
+        $html .= self::end_div();
+        $html .= self::div($content, "panel-body");
+        $html .= self::start_div("panel-footer icon");
+        $html .= self::tag("small", $footer);
+        $html .= self::end_div();
+        $html .= self::end_tag("article");
+
+        return $html;
+    }
+
+
     public static function panel_footer($icon, $content)
     {
         $html  = self::start_tag("article", ["class" => "panel panel-info panel-outline"]);
