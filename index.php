@@ -5,6 +5,8 @@ namespace block_minerva;
 use block_minerva\base\course;
 use block_minerva\base\graph;
 use block_minerva\base\logging;
+use block_minerva\base\quiz;
+use block_minerva\misaka\misakamessages;
 
 require_once __DIR__ . '/../../config.php';
 require_once "apinfo.php";
@@ -14,8 +16,7 @@ require_login();
 /* @var $USER object */
 /* @var $CFG object */
 /* @var $PAGE object */
-/* @var $OUTPUT object */
-global $USER, $CFG, $PAGE, $OUTPUT;
+global $USER, $CFG, $PAGE;
 global $APS;
 
 $context = \context_course::instance(1);
@@ -25,8 +26,10 @@ $loggingObj = new logging($context);
 $graphObj = new graph($context);
 
 $jses = [];
+$userid = $USER->id;
 
 $PAGE->set_context($context);
+
 echo \html_writer::start_tag('html');
 echo \html_writer::start_tag('head');
 echo \html_writer::empty_tag('meta',
@@ -64,17 +67,53 @@ echo \html_writer::start_div("container");
 echo \html_writer::start_div("row profile");
 echo \html_writer::start_div("col-md-3");
 echo \html_writer::start_div("profile-sidebar");
-echo \html_writer::div($OUTPUT->user_picture($USER, ['size'=>140, 'class' => 'img-responsive', "link" => false, "alttext" => false]),
-    "profile-userpic");
 
-echo \html_writer::start_div('popover bottom show', ['style' => 'position:relative; max-width:100%;']);
-echo \html_writer::start_div('arrow');
-echo \html_writer::end_div();
+$message_obj = new misakamessages($context);
+$message = $message_obj->generate();
+$html = \html_writer::start_div('', ['style' => 'text-align:center;', 'id' => 'misaka_shiromu']);
+if ($message->score >= 1) {
+    $html .= \html_writer::empty_tag('img', ['src' => new \moodle_url('images/srm02.jpg'), 'class' => 'img-circle', 'data-toggle' => 'modal']);
+}elseif($message->score == 0){
+    $html .= \html_writer::empty_tag('img', ['src' => new \moodle_url('images/srm01.jpg'), 'class' => 'img-circle', 'data-toggle' => 'modal']);
+} else {
+    $html .= \html_writer::empty_tag('img', ['src' => new \moodle_url('images/srm05.jpg'), 'class' => 'img-circle', 'data-toggle' => 'modal']);
+}
+$html .= \html_writer::end_div();
+$html .= \html_writer::start_div('popover bottom show', ['style' => 'position:relative; max-width:100%;']);
+$html .= \html_writer::start_div('arrow');
+$html .= \html_writer::end_div();
+if ($USER->id == 0) {
+    $html .= \html_writer::tag('h3', 'こんにちは！', ['class' => 'popover-title']);
+    $html .= \html_writer::start_div('popover-content');
+    $html .= \html_writer::tag('p', 'ログインすると、私があなたをサポートします！');
+} else {
+    $html .= \html_writer::tag('h3', '今日のアドバイス！', ['class' => 'popover-title']);
+    $html .= \html_writer::start_div('popover-content');
+    $html .= \html_writer::tag('p', $message->text);
+    $html .= \html_writer::start_tag('blockquote');
+    $html .= \html_writer::div('', '', ['id' => 'misaka_speech_area']);
+    $html .= \html_writer::end_tag('blockquote');
+    $PAGE->requires->jquery();
+    $PAGE->requires->js(new \moodle_url($CFG->wwwroot . '/blocks/misaka/js/bootstrap.min.js'));
+    $PAGE->requires->js(new \moodle_url($CFG->wwwroot . '/blocks/misaka/js/speech.js'));
+}
+$html .= \html_writer::end_div();
+$html .= \html_writer::end_div();
+$html .= \html_writer::start_div('modal hide fade', ['id' => 'speech_modal', 'tabindex' => '-1', 'role' => 'dialog', 'aria-hidden' => 'true', 'aria-labelledby' => 'speech_modal_header']);
+$html .= \html_writer::start_div('modal-header', ['id' => 'speech_modal_header']);
+$html .= \html_writer::tag('button', '&times;', ['class' => 'close', 'type' => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true']);
+$html .= \html_writer::tag('h3', 'お話しください');
+$html .= \html_writer::end_div();
+$html .= \html_writer::start_div('modal-body', ['style' => 'text-align:center;']);
+$html .= \html_writer::empty_tag('img', ['src' => new \moodle_url('images/srm01.jpg'), 'class' => 'img-circle', 'data-toggle' => 'modal']);
+$html .= \html_writer::tag('h5', 'ブラウザ上部の「許可」ボタンをクリックして、マイクに向かってお話しください。');
+$html .= \html_writer::end_div();
+$html .= \html_writer::start_div('modal-footer');
+$html .= \html_writer::link(new \moodle_url('#'), '終了', ['class' => 'btn', 'id' => 'speech_finish_btn']);
+$html .= \html_writer::end_div();
+$html .= \html_writer::end_div();
 
-echo \html_writer::start_div('popover-content');
-echo \html_writer::tag('p', "");
-echo \html_writer::end_div();
-echo \html_writer::end_div();
+echo $html;
 
 echo \html_writer::start_div("profile-usertitle");
 echo \html_writer::div(fullname($USER), "profile-usertitle-name");
@@ -99,6 +138,7 @@ echo \html_writer::end_div();
 
 echo \html_writer::start_div("col-md-9 profile-content");
 
+echo \html_writer::start_div("row");
 echo \html_writer::start_div("col-md-6");
 echo \html_writer::tag("h3", "アクセスステータス");
 //TODO
@@ -136,7 +176,22 @@ $label = ["'月'", "'火'", "'水'", "'木'", "'金'", "'土'", "'日'"];
 //$label = [0,1,2,3,4,5,6];
 $jses[] = $graphObj->line($label, $access_statuses, "access_graph");
 echo \html_writer::end_div();
+echo \html_writer::end_div();
 
+echo \html_writer::start_div("row");
+echo \html_writer::start_div("col-md-6");
+echo \html_writer::tag("h3", "最近受験した小テスト");
+$quizzes = quiz::recently_attempt($userid);
+var_dump($quizzes);
+
+echo \html_writer::end_div();
+echo \html_writer::start_div("col-md-6");
+echo \html_writer::tag("h3", "小テスト受験率");
+echo \html_writer::end_div();
+
+echo \html_writer::end_div();
+
+echo \html_writer::start_div("row");
 echo \html_writer::start_div("col-md-12");
 echo \html_writer::tag("h3", "所属しているコース");
 echo \html_writer::div("現時点であなたが所属しているコース一覧です。(10件まで表示しています)", "alert alert-info");
@@ -162,6 +217,7 @@ if(!empty($courses)){
 }
 echo \html_writer::end_tag("table");
 echo \html_writer::end_div();
+echo \html_writer::end_div();
 
 echo \html_writer::end_div();
 echo \html_writer::end_div();
@@ -174,6 +230,9 @@ echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/bootstrap.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/d3.min.js'));
 echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/c3.min.js'));
+echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/misaka/speech.js'));
+echo \html_writer::script(null, new \moodle_url($CFG->wwwroot . '/blocks/minerva/js/misaka/weather.js'));
+
 foreach($jses as $js){
     echo \html_writer::script($js);
 }

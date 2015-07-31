@@ -13,7 +13,7 @@ class quiz
 
     function __construct($context)
     {
-        global $USER, $CFG;
+        global $USER;
 
         $this->context = $context;
         $this->user = $USER;
@@ -27,7 +27,7 @@ class quiz
      *
      * @return mixed
      */
-    public function quiz($quizid)
+    public static function quiz($quizid)
     {
         global $DB;
         return $DB->get_record('quiz', ['id' => $quizid]);
@@ -42,12 +42,13 @@ class quiz
     /**
      * コース内の小テストをすべて取得する。
      *
+     * @param $courseid
      * @return array
      * @throws \coding_exception
      */
-    public function quizzes()
+    public function quizzes($courseid)
     {
-        return get_coursemodules_in_course('quiz', $this->course->id);
+        return get_coursemodules_in_course('quiz', $courseid);
     }
 
     /**
@@ -73,5 +74,25 @@ class quiz
     public static function best_grade($quiz, $userid)
     {
         return quiz_get_best_grade($quiz, $userid);
+    }
+
+    public static function recently_attempt($userid)
+    {
+        global $DB;
+        $logs = $DB->get_records(
+            "mdl_logstore_standard_log",
+            ["userid" => $userid, "component" => "mod_quiz", "action" => "submitted"],
+            "",
+            "*",
+            0,10
+        );
+
+        $quiz = [];
+        foreach($logs as $log){
+            $quiz_attempt = self::attempt($log->objectid);
+            $quiz[] = self::quiz($quiz_attempt->quizid);
+        }
+
+        return $quiz;
     }
 }

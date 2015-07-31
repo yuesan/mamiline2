@@ -2,9 +2,7 @@
 
 namespace block_minerva\misaka\rules;
 
-use block_misaka\message;
-
-class weather extends message{
+class weather{
     public function get()
     {
         global $DB, $USER, $OUTPUT, $PAGE, $CFG;
@@ -19,8 +17,6 @@ class weather extends message{
         $message->text .= \html_writer::empty_tag('img', ['id' => 'weather_icon']);
 
         $message->text .= \html_writer::div('(気象データはOpenWeatherMapから取得しています。)', '');
-
-        $this->message_text .= $message->text;
 
         return $message;
     }

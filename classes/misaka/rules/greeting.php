@@ -2,9 +2,7 @@
 
 namespace block_minerva\misaka\rules;
 
-use block_misaka\message;
-
-class greeting extends message{
+class greeting{
     function __construct()
     {
 
@@ -28,8 +26,6 @@ class greeting extends message{
         }else{
             $message->text = "こんにちは！" . "最近3日間で" . $count_login . '回お会いしましたね！';
         }
-
-        $this->message_text = $message->text;
 
         $message->score = 1;
 
