@@ -130,9 +130,10 @@ foreach ($dataes as $data) {
                 $attempt = $quizObj->attempt($data->objectid);
                 $quiz = $quizObj->quiz($attempt->quiz);
                 $grade = $quizObj->grade($quiz, $userid);
+                $max_grade = quiz_format_grade($quiz, $quiz->grade);
                 echo html_writer::panel_success("",
                     "小テストを受験",
-                    $date . "に小テスト「" . $quiz->name . "」を受験しました。点数は" . $grade->rawgrade . "でした。");
+                    $date . "に小テスト「" . $quiz->name . "」を受験しました。点数は" . $grade . "(" . $max_grade . "点中)でした。");
             }
             break;
     }

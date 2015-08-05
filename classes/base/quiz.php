@@ -1,7 +1,7 @@
 <?php
 namespace block_minerva\base;
 
-require_once("../../../../mod/quiz/lib.php");
+require_once(__DIR__ . "/../../../../mod/quiz/lib.php");
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -60,8 +60,9 @@ class quiz
      */
     public static function grade($quiz, $userid)
     {
-        $grade = quiz_get_user_grades($quiz, $userid);
-        return array_shift($grade);
+        $grades = quiz_get_user_grades($quiz, $userid);
+        $grade = array_shift($grades);
+        return quiz_format_grade($quiz, $grade->rawgrade);
     }
 
     /**
@@ -80,17 +81,15 @@ class quiz
     {
         global $DB;
         $logs = $DB->get_records(
-            "mdl_logstore_standard_log",
-            ["userid" => $userid, "component" => "mod_quiz", "action" => "submitted"],
-            "",
+            "quiz_attempts",
+            ["userid" => $userid, "state" => "finished"],
+            "timemodified DESC",
             "*",
             0,10
         );
-
         $quiz = [];
         foreach($logs as $log){
-            $quiz_attempt = self::attempt($log->objectid);
-            $quiz[] = self::quiz($quiz_attempt->quizid);
+            $quiz[$log->quiz] = self::quiz($log->quiz);
         }
 
         return $quiz;

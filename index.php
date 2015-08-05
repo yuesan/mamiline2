@@ -64,9 +64,29 @@ echo \html_writer::end_div();
 echo \html_writer::end_tag('nav');
 
 echo \html_writer::start_div("container");
+
 echo \html_writer::start_div("row profile");
 echo \html_writer::start_div("col-md-3");
 echo \html_writer::start_div("profile-sidebar");
+
+echo \html_writer::start_div("profile-usertitle");
+echo \html_writer::div(fullname($USER), "profile-usertitle-name");
+echo \html_writer::end_div();
+echo \html_writer::start_div("profile-usermenu");
+echo \html_writer::start_tag("ul", ["class" => "nav"]);
+echo \html_writer::start_tag("li", ["class" => "active"]);
+echo \html_writer::link("#",
+    \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "ダッシュボード");
+echo \html_writer::end_tag("li");
+
+foreach($APS as $ap){
+    echo \html_writer::start_tag("li", ["class" => ""]);
+    echo \html_writer::link(new \moodle_url("ap/" . $ap["name"] . "/"),
+        \html_writer::tag("i", "", ["class" => $ap["icon"]]) . $ap["naturalname"]);
+    echo \html_writer::end_tag("li");
+}
+echo \html_writer::end_tag("ul");
+echo \html_writer::end_div();
 
 $message_obj = new misakamessages($context);
 $message = $message_obj->generate();
@@ -112,27 +132,8 @@ $html .= \html_writer::start_div('modal-footer');
 $html .= \html_writer::link(new \moodle_url('#'), '終了', ['class' => 'btn', 'id' => 'speech_finish_btn']);
 $html .= \html_writer::end_div();
 $html .= \html_writer::end_div();
-
 echo $html;
 
-echo \html_writer::start_div("profile-usertitle");
-echo \html_writer::div(fullname($USER), "profile-usertitle-name");
-echo \html_writer::end_div();
-echo \html_writer::start_div("profile-usermenu");
-echo \html_writer::start_tag("ul", ["class" => "nav"]);
-echo \html_writer::start_tag("li", ["class" => "active"]);
-echo \html_writer::link("#",
-    \html_writer::tag("i", "", ["class" => "glyphicon glyphicon-home"]) . "ダッシュボード");
-echo \html_writer::end_tag("li");
-
-foreach($APS as $ap){
-    echo \html_writer::start_tag("li", ["class" => ""]);
-    echo \html_writer::link(new \moodle_url("ap/" . $ap["name"] . "/"),
-        \html_writer::tag("i", "", ["class" => $ap["icon"]]) . $ap["naturalname"]);
-    echo \html_writer::end_tag("li");
-}
-echo \html_writer::end_tag("ul");
-echo \html_writer::end_div();
 echo \html_writer::end_div();
 echo \html_writer::end_div();
 
@@ -181,10 +182,24 @@ echo \html_writer::end_div();
 echo \html_writer::start_div("row");
 echo \html_writer::start_div("col-md-6");
 echo \html_writer::tag("h3", "最近受験した小テスト");
+echo \html_writer::start_tag("table", ["class" => "table table-borderd"]);
+echo \html_writer::start_tag("tr");
+echo \html_writer::tag("th", "小テスト名");
+echo \html_writer::tag("th", "受験した時間");
+echo \html_writer::tag("th", "点数");
+echo \html_writer::end_tag("tr");
 $quizzes = quiz::recently_attempt($userid);
-var_dump($quizzes);
-
+foreach($quizzes as $quiz){
+    $grade = quiz::grade($quiz, $userid);
+    echo \html_writer::start_tag("tr");
+    echo \html_writer::tag("td", $quiz->name);
+    echo \html_writer::tag("td", userdate($quiz->timemodified));
+    echo \html_writer::tag("td", $grade);
+    echo \html_writer::end_tag("tr");
+}
+echo \html_writer::end_tag("table");
 echo \html_writer::end_div();
+
 echo \html_writer::start_div("col-md-6");
 echo \html_writer::tag("h3", "小テスト受験率");
 echo \html_writer::end_div();
