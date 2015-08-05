@@ -77,19 +77,26 @@ class quiz
         return quiz_get_best_grade($quiz, $userid);
     }
 
+    /**
+     * 直近10回の受験した小テストを取得する
+     *
+     * @param $userid
+     * @return array
+     */
     public static function recently_attempt($userid)
     {
         global $DB;
         $logs = $DB->get_records(
             "quiz_attempts",
-            ["userid" => $userid, "state" => "finished"],
-            "timemodified DESC",
+            ["userid" => $userid, "state" => "finished", "preview" => 0],
+            "timefinish DESC",
             "*",
             0,10
         );
         $quiz = [];
         foreach($logs as $log){
             $quiz[$log->quiz] = self::quiz($log->quiz);
+            $quiz[$log->quiz]->timelastattempt = $log->timefinish;
         }
 
         return $quiz;

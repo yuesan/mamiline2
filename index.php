@@ -193,7 +193,7 @@ foreach($quizzes as $quiz){
     $grade = quiz::grade($quiz, $userid);
     echo \html_writer::start_tag("tr");
     echo \html_writer::tag("td", $quiz->name);
-    echo \html_writer::tag("td", userdate($quiz->timemodified));
+    echo \html_writer::tag("td", userdate($quiz->timelastattempt));
     echo \html_writer::tag("td", $grade);
     echo \html_writer::end_tag("tr");
 }
