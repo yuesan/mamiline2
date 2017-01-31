@@ -10,7 +10,7 @@
   "dependencies": {
     "jquery": "~2.0.*",
     "bootstrap": "3.2.*",
-    "c3": "*"
+    "chart.js": "*"
   },
   "exportsOverride": {
     "bootstrap": {
@@ -21,12 +21,9 @@
     "jquery": {
       "js": "**/jquery.min.js"
     },
-    "d3": {
-      "js": "**/d3.min.js"
-    },
-    "c3": {
-      "js": "**/c3.min.js",
-      "css": "**/c3.css"
+    "chart.js" : {
+      "js" : "**/Chart.min.js",
+      "css" : "**/Chart.min.css"
     }
   }
 }

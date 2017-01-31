@@ -1,10 +1,10 @@
 var ctx = $("#@@ID@@");
-var chart = new Chart(ctx, {
+var chart = new Chart(ctx,{
+    type: 'bubble',
     data: @@DATA@@,
-    type: "pie",
     options : {
         animation : {
             animateRotate : true
         }
-    }
-});
+    }}
+);

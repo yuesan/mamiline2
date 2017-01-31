@@ -4,36 +4,21 @@ namespace block_minerva\base;
 defined('MOODLE_INTERNAL') || die();
 
 require_once __DIR__ . '/../../../../config.php';
+require_once __DIR__ . '/../../../../course/lib.php';
 
 class course
 {
-    private $cache;
-    private $context;
-    private $user;
-
-    function __construct($context)
-    {
-        global $USER, $CFG;
-        require_once __DIR__ . '/../../../../course/lib.php';
-
-        $this->context = $context;
-        $this->user = $USER;
-        $this->cache = new \stdClass();
-    }
 
     /**
      * ユーザが所属しているコース一覧を取得する。
      *
+     * @param int $userid
      * @return array
      * @throws \coding_exception
      */
-    public function courses()
+    public static function courses($userid)
     {
-        if(property_exists($this->cache, "courses")){
-            return $this->cache->courses;
-        }else{
-            return $this->cache->courses = enrol_get_all_users_courses($this->user->id);
-        }
+        return enrol_get_all_users_courses($userid);
     }
 
     /**
@@ -43,7 +28,7 @@ class course
      *
      * @return \stdClass
      */
-    public function course($courseid)
+    public static function course($courseid)
     {
         return get_course($courseid);
     }
@@ -55,7 +40,7 @@ class course
      *
      * @return \moodle_url
      */
-    public function course_url($courseid)
+    public static function course_url($courseid)
     {
         return \course_get_url($courseid);
     }

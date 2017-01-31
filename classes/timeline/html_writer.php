@@ -1,7 +1,7 @@
 <?php
 namespace block_minerva\timeline;
 
-class html_writer extends \html_writer
+class html_writer extends \block_minerva\base\html_writer
 {
     public static function line()
     {
