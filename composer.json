@@ -1,0 +1,18 @@
+{
+  "name": "yuesan/moodle-block_minerva",
+  "description": "Analyse data",
+  "license": "GPLv3",
+  "authors": [
+    {
+      "name": "Takayuki Fuwa",
+      "email": "yue@eldoom.me"
+    }
+  ],
+  "type": "moodle-block",
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "extra": {
+    "installer-name": "minerva"
+  }
+}
