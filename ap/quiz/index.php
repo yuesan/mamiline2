@@ -2,11 +2,9 @@
 
 namespace block_minerva;
 
-use block_minerva\base\course;
 use block_minerva\base\logging;
 use block_minerva\base\html_writer;
 use block_minerva\base\security;
-use block_minerva\quiz\graph;
 use block_minerva\quiz\js;
 use block_minerva\quiz\quiz;
 
@@ -20,7 +18,6 @@ global $PAGE;
 
 //Get course top context
 $context = \context_course::instance(1);
-$loggingObj = new logging($context);
 
 $javascripts = [];
 
@@ -46,14 +43,14 @@ echo html_writer::tag("h4", "サマリー");
 echo html_writer::start_div("col-md-3");
 echo html_writer::start_div("panel panel-primary");
 echo html_writer::div("今まで受験した小テストの数", "panel-heading");
-echo html_writer::div(html_writer::graph("graph_total_attempted"), "panel-body");
+echo html_writer::div(html_writer::graph("graph_total_attempted", 300, 300), "panel-body");
 echo html_writer::end_div(); //.panel panel-default
 echo html_writer::end_div(); //.col-md-3
 
 echo html_writer::start_div("col-md-3");
 echo html_writer::start_div("panel panel-primary");
 echo html_writer::div("小テストの点数分布", "panel-heading");
-echo html_writer::div(html_writer::graph("graph_total_grades"), "panel-body");
+echo html_writer::div(html_writer::graph("graph_total_grades", 300, 300), "panel-body");
 echo html_writer::end_div(); //.panel panel-default
 echo html_writer::end_div(); //.col-md-3
 

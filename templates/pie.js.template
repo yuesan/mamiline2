@@ -3,6 +3,7 @@ var chart = new Chart(ctx, {
     data: @@DATA@@,
     type: "pie",
     options : {
+        responsive: false,
         animation : {
             animateRotate : true
         }

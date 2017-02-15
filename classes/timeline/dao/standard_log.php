@@ -6,7 +6,7 @@ defined('MOODLE_INTERNAL') || die();
 
 define("MAX_LOGS", 10000);
 
-class log
+class standard_log
 {
     private $context;
     private $cache;
@@ -37,8 +37,4 @@ class log
             $from_num, $max_num);
     }
 
-    public function in_course($courseid)
-    {
-
-    }
 }

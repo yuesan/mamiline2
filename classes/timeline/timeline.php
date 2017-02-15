@@ -5,6 +5,7 @@ namespace block_minerva\timeline;
 defined('MOODLE_INTERNAL') || die();
 
 use block_minerva\timeline\dao\log;
+use block_minerva\timeline\dao\standard_log;
 
 class timeline
 {
@@ -12,7 +13,7 @@ class timeline
 
     function __construct($context)
     {
-        $this->logObject = new log($context);
+        $this->logObject = new standard_log($context);
     }
 
     public function myself()
@@ -20,7 +21,15 @@ class timeline
         return $this->logObject->myself();
     }
 
-    public function get_message()
+    public static function get_userlink($data)
     {
+        global $USER, $CFG;
+
+        $user = \core_user::get_user($data->userid);
+        if ($user->id == $USER->id) {
+            return html_writer::link(new \moodle_url($CFG->wwwroot . "/user/profile.php", ["id" => $user->id]), "あなた");
+        } else {
+            return html_writer::link(new \moodle_url($CFG->wwwroot . "/user/profile.php", ["id" => $user->id]), fullname($user));
+        }
     }
 }

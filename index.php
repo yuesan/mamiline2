@@ -6,6 +6,7 @@ use block_minerva\base\course;
 use block_minerva\base\logging;
 use block_minerva\base\html_writer;
 use block_minerva\quiz\quiz;
+use block_minerva\quiz\attempts;
 
 require_once __DIR__ . '/../../config.php';
 require_once "apinfo.php";
@@ -59,9 +60,9 @@ $week = [1, 2, 3, 4, 5];
 $access_statuses = $loggingObj->access_status();
 foreach ($week as $w) {
     if ($access_statuses[$w] != 0) {
-        echo \html_writer::tag("td", html_writer::img_stamp("taihenyokudekimasita.png"));
+        echo \html_writer::tag("td", html_writer::img_stamp("taihenyokudekimasita.png", "たいへんよくできました"));
     } else {
-        echo \html_writer::tag("td", html_writer::img_stamp("mousukosiganbarimashou.png"));
+        echo \html_writer::tag("td", html_writer::img_stamp("mousukosiganbarimashou.png", "もうすこしがんばりましょう"));
     }
 }
 echo \html_writer::end_tag("tr");
@@ -76,14 +77,14 @@ echo \html_writer::tag("th", "小テスト名");
 echo \html_writer::tag("th", "受験した時間");
 echo \html_writer::tag("th", "点数");
 echo \html_writer::end_tag("tr");
-$quizzes = quiz::recently_attempt($userid);
+$quizzes = attempts::recently_attempt($userid);
 
 foreach ($quizzes as $quiz) {
     $grade = quiz::get_grade($quiz);
     echo \html_writer::start_tag("tr");
     echo \html_writer::tag("td", $quiz->name);
     echo \html_writer::tag("td", userdate($quiz->timelastattempt));
-    echo \html_writer::tag("td", $grade);
+    echo \html_writer::tag("td", quiz_format_grade($quiz, $grade->rawgrade));
     echo \html_writer::end_tag("tr");
 }
 echo \html_writer::end_tag("table");

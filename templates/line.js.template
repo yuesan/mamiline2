@@ -1,26 +1,15 @@
-var chart = c3.generate({
-    bindto: '#@@ID@@',
-    data: {
-        x : 'x',
-        y : 'y',
-        columns: [
-            ['x', @@X@@],
-            [@@DATA@@]
-        ],
-        type : 'line'
-    },
-    axis: {
-        x: {
-            type : 'category',
-            label: {
-                text : '曜日'
-            }
-        },
-        y : {
-            label : {
-                text : 'ログイン回数',
-                inverted : true
-            }
-        }
+var options = {
+    responsive: false,
+    scales: {
+        xAxes: [{
+            display: true
+        }]
     }
+}
+
+var ctx = $("#@@ID@@");
+var line = new Chart(ctx, {
+    type: 'line',
+    data: @@DATA@@,
+    options: options
 });

@@ -3,6 +3,7 @@ var chart = new Chart(ctx,{
     type: 'bubble',
     data: @@DATA@@,
     options : {
+        responsive: false,
         animation : {
             animateRotate : true
         }

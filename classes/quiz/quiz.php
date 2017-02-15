@@ -52,30 +52,6 @@ class quiz
     }
 
     /**
-     * Return attempt object by id
-     *
-     * @param $id
-     * @return mixed
-     */
-    public static function get_attempt($id)
-    {
-        global $DB;
-        return $DB->get_record('quiz_attempts', ['id' => $id]);
-    }
-
-    /**
-     * Return attempts by quiz_id
-     *
-     * @param $quiz_id
-     * @return \an
-     */
-    public static function get_attempts($quiz_id)
-    {
-        global $USER;
-        return quiz_get_user_attempts($quiz_id, $USER->id);
-    }
-
-    /**
      * Return grade
      *
      * @param $quiz
@@ -87,6 +63,8 @@ class quiz
 
         $grades = quiz_get_user_grades($quiz, $USER->id);
         $grade = array_shift($grades);
+
+        return $grade;
 
         return is_null($grade) ? null : quiz_format_grade($quiz, $grade->rawgrade);
     }
@@ -107,29 +85,6 @@ class quiz
     {
         global $USER;
         return quiz_get_best_grade($quiz, $USER->id);
-    }
-
-    /**
-     * 直近n回の受験した小テストを取得する
-     *
-     * @param int $limit
-     * @return array
-     */
-    public static function recently_attempt($limit = 10)
-    {
-        global $DB, $USER;
-        $logs = $DB->get_records(
-            "quiz_attempts",
-            ["userid" => $USER->id, "state" => "finished", "preview" => 0],
-            "timefinish DESC", "*", 0, $limit
-        );
-        $quiz = [];
-        foreach ($logs as $log) {
-            $quiz[$log->quiz] = self::get_quiz_by_instance($log->quiz);
-            $quiz[$log->quiz]->timelastattempt = $log->timefinish;
-        }
-
-        return $quiz;
     }
 
     public static function get_attempted_quizzes()

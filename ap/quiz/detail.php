@@ -12,6 +12,7 @@ use block_minerva\base\html_writer;
 use block_minerva\base\security;
 use block_minerva\quiz\js;
 use block_minerva\quiz\quiz;
+use block_minerva\quiz\attempts;
 
 require_once __DIR__ . '/../../../../config.php';
 require_once __DIR__ . '/../../apinfo.php';
@@ -33,7 +34,7 @@ if ($quiz == false) {
     print_error("quiz_not_found", "block_minerva");
 }
 //attempts
-$attempts = quiz::get_attempts($quiz->id);
+$attempts = attempts::get_attempts($quiz->id);
 
 $javascripts = [];
 

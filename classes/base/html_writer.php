@@ -6,12 +6,14 @@ defined('MOODLE_INTERNAL') || die();
 
 class html_writer extends \html_writer
 {
-    public static function img_stamp($filename)
+    public static function img_stamp($filename, $alt, $attributes = [])
     {
         global $CFG;
 
+        $attributes["class"] = "img-circle img-responsive";
+
         return \html_writer::img(new \moodle_url($CFG->wwwroot . "/blocks/minerva/images/stamp/" . $filename),
-            "たいへんよくできました", ["class" => "img-circle img-responsive"]);
+            $alt, $attributes);
     }
 
     public static function head()
