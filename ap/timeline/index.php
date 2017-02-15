@@ -73,9 +73,11 @@ foreach ($dataes as $data) {
         case "mod_forum" :
             echo filter\forum::do($data);
             break;
-
         case "mod_feedback" :
             echo filter\feedback::do($data);
+            break;
+        case "mod_assign" :
+            echo filter\assign::do($data);
             break;
     }
 }

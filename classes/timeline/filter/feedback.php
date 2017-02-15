@@ -17,13 +17,13 @@ class feedback
 {
     public static function do($data)
     {
-        global $CFG, $DB;
+        global $CFG, $DB, $USER;
 
         $user_link = timeline::get_userlink($data);
 
         $html = "";
 
-        if ($data->action === "submitted" && $data->target === "response") {
+        if ($data->action === "submitted" && $data->target === "response" && $data->userid === $USER->id) {
             $feedback_completed = $DB->get_record("feedback_completed", ["id" => $data->objectid]);
             if(!$feedback_completed){
                 return "";

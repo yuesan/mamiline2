@@ -91,6 +91,8 @@ class html_writer extends \block_minerva\base\html_writer
 
     public static function panel_primary($title, $content, $footer, $icon)
     {
+        global $OUTPUT;
+
         $html = self::start_tag("article", ["class" => "panel panel-primary"]);
 
         $html .= self::start_div("panel-heading icon");
@@ -141,7 +143,7 @@ class html_writer extends \block_minerva\base\html_writer
     {
         $table = new \html_table();
         $table->attributes["class"] = "table table-bordered table-hover";
-        $table->head = ["", "ファイル名", "-", "ファイル登録日", "ファイル更新日"];
+        $table->head = $table_head;
         $table->data = $table_data;
 
         return html_writer::table($table);

@@ -4,7 +4,7 @@ namespace block_minerva\timeline\dao;
 
 defined('MOODLE_INTERNAL') || die();
 
-define("MAX_LOGS", 10000);
+define("MAX_LOGS", 1000);
 
 class standard_log
 {
@@ -29,12 +29,10 @@ class standard_log
         global $DB, $USER;
         $from_num = $page * MAX_LOGS;
         $max_num = $from_num + MAX_LOGS;
-        return $DB->get_records(
-            "logstore_standard_log",
-            ["userid" => $USER->id],
-            "timecreated DESC",
-            "*",
-            $from_num, $max_num);
+
+        $sql = "SELECT * FROM {logstore_standard_log} WHERE userid = :userid OR relateduserid = :relateduserid ORDER BY timecreated DESC";
+
+        return $DB->get_records_sql($sql, ["userid" => $USER->id, "relateduserid" => $USER->id], $from_num, $max_num);
     }
 
 }

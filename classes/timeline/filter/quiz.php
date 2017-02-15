@@ -4,7 +4,6 @@ namespace block_minerva\timeline\filter;
 
 use block_minerva\quiz\attempts;
 use block_minerva\timeline\html_writer;
-use block_minerva\timeline\timeline;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -22,7 +21,7 @@ class quiz
 
         $html = "";
 
-        if ($data->target === "attempt" && $data->eventname === '\mod_quiz\event\attempt_submitted') {
+        if ($data->target === "attempt" && $data->eventname === '\mod_quiz\event\attempt_submitted' && $data->userid === $USER->id) {
             $attempt = attempts::get_attempt($data->objectid);
             //When quiz or quiz attempt was deleted, skip
             if (!$attempt) {
@@ -52,9 +51,9 @@ class quiz
                 $title = $quiz->name . "は不合格でした・・・";
 
                 if ($quiz->timeclose != 0 && $quiz->timeclose < time()) {
-                    $content = "ふりかえりしてみませんか？<hr>" . html_writer::link($quiz_url, "ふりかえりをする", ["class" => "btn btn-primary"]);
+                    $content = "ふりかえりしてみませんか？<hr>" . html_writer::link($quiz_url, "ふりかえりをする", ["class" => "btn btn-success"]);
                 } else {
-                    $content = "もう一度、挑戦してみませんか？<hr>" . html_writer::link($quiz_url, "もう一度挑戦する", ["class" => "btn btn-primary"]);
+                    $content = "もう一度、挑戦してみませんか？<hr>" . html_writer::link($quiz_url, "もう一度挑戦する", ["class" => "btn btn-success"]);
                 }
 
                 $footer = $image;
@@ -113,7 +112,7 @@ class quiz
             "datasets" => [[
                 "label"                 => "点数の遷移(複数回受験した時の点数遷移)",
                 "data"                  => $data,
-                "fill"                  => false,
+                "fill"                  => true,
                 "lineTension"           => 0.1,
                 "backgroundColor"       => "rgba(75,192,192,0.4)",
                 "borderColor"           => "rgba(75,192,192,1)",

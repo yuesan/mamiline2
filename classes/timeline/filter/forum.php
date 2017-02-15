@@ -16,7 +16,7 @@ class forum
 {
     public static function do($data)
     {
-        global $CFG, $DB, $USER, $OUTPUT;
+        global $CFG, $DB, $USER, $USER;
 
         $html = "";
 
@@ -28,7 +28,7 @@ class forum
         }
 
         // response post
-        if ($data->userid !== $data->relateduserid && $data->target === "post") {
+        if ($data->userid !== $data->relateduserid && $data->target === "post" && $data->userid === $USER->id) {
             $post = $DB->get_record("forum_posts", ["id" => $data->objectid]);
             $discussion = $DB->get_record("forum_discussions", ["id" => $post->discussion]);
             $forum = $DB->get_record("forum", ["id" => $discussion->forum]);
@@ -54,7 +54,7 @@ class forum
             $html = html_writer::panel_success($title, $content, $footer, "glyphicon-comment");
 
             // new post
-        } elseif ($data->target === "discussion" && $data->action === "created") {
+        } elseif ($data->target === "discussion" && $data->action === "created" && $data->userid === $USER->id) {
             $discussion = $DB->get_record("forum_discussions", ["id" => $data->objectid]);
             $forum = $DB->get_record("forum", ["id" => $discussion->forum]);
             $post = $DB->get_record("forum_posts", ["id" => $discussion->firstpost]);
