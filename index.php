@@ -23,6 +23,8 @@ $loggingObj = new logging($context);
 
 $userid = $USER->id;
 
+redirect(new \moodle_url("ap/timeline/index.php"));
+
 $PAGE->set_context($context);
 
 echo html_writer::head();
